@@ -28,13 +28,13 @@ const content = {
       'This is protected content! It’s only available if you have the premium plan.',
     allowedRoles: ['premium'],
   },
-}
+};
 
 exports.handler = async (event, context) => {
-  const { type } = JSON.parse(event.body)
-  const { user } = context.clientContext
-  const roles = user ? user.app_metadata.roles : false
-  const { allowedRoles } = content[type]
+  const { type } = JSON.parse(event.body);
+  const { user } = context.clientContext;
+  const roles = user ? user.app_metadata.roles : false;
+  const { allowedRoles } = content[type];
 
   if (!roles || !roles.some((role) => allowedRoles.includes(role))) {
     return {
@@ -47,11 +47,11 @@ exports.handler = async (event, context) => {
         creditLink: 'https://dribbble.com/jlengstorf',
         message: `This content requires a ${type} subscription.`,
       }),
-    }
+    };
   }
 
   return {
     statusCode: 200,
     body: JSON.stringify(content[type]),
-  }
-}
+  };
+};
